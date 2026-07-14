@@ -1,0 +1,16 @@
+<div id="<%= dom_id book %>">
+  <div>
+    <span class="block text-xs font-medium text-gray-500 uppercase tracking-wide my-1">Title:</span>
+    <span class="block text-base text-gray-900"><%= book.title %></span>
+  </div>
+
+  <div>
+    <span class="block text-xs font-medium text-gray-500 uppercase tracking-wide my-1">Published at:</span>
+    <span class="block text-base text-gray-900"><%= book.published_at %></span>
+  </div>
+
+  <div>
+    <span class="block text-xs font-medium text-gray-500 uppercase tracking-wide my-1">Author:</span>
+    <span class="block text-base text-gray-900"><%= book.author.full_name %></span>
+  </div>
+</div>
