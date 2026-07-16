@@ -59,6 +59,5 @@ group :development do
   gem "web-console"
 end
 
-gem "shoulda-matchers", "~> 8.0"
-
 gem "devise", "~> 5.0"
+gem "pundit", "~> 2.5"
