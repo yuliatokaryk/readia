@@ -1,4 +1,5 @@
 class Author < ApplicationRecord
+  belongs_to :user
   has_many :books
   validates :first_name, presence: true
 
