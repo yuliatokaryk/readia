@@ -1,0 +1,2 @@
+class AuthorPolicy
+end
