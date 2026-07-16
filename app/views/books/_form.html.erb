@@ -1,0 +1,35 @@
+<%= form_with(model: book) do |form| %>
+  <% if book.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
+
+      <ul>
+        <% book.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-5">
+    <%= form.label :title, class: "block mb-2.5 text-sm font-medium text-heading" %>
+    <%= form.text_field :title, class: "bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow placeholder:text-body" %>
+  </div>
+
+  <div class="mb-5">
+    <%= form.label :published_at, class: "block mb-2.5 text-sm font-medium text-heading" %>
+    <%= form.date_field :published_at, class: "bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow placeholder:text-body" %>
+  </div>
+
+  <div class="mb-5">
+    <%= form.label :author_id, class: "block mb-2.5 text-sm font-medium text-heading" %>
+    <%= form.collection_select :author_id, Author.all, :id, :full_name,
+      { prompt: "Select an author" },
+      { class: "bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow" } 
+    %>
+  </div>
+
+  <button class="bg-blue-500 hover:bg-blue-700 text-white py-2 px-4 border border-blue-700 rounded">
+    <%= form.submit %>
+  </button>
+<% end %>
