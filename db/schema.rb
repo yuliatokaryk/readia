@@ -22,7 +22,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_14_192211) do
   end
 
   create_table "books", force: :cascade do |t|
-    t.bigint "author_id", null: false
+    t.bigint "author_id"
     t.datetime "created_at", null: false
     t.date "published_at"
     t.string "title"
