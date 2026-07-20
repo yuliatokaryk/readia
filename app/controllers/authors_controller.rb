@@ -23,6 +23,7 @@ class AuthorsController < ApplicationController
   # POST /authors or /authors.json
   def create
     @author = Author.new(author_params)
+    @author.user = current_user
 
     respond_to do |format|
       if @author.save
