@@ -11,6 +11,10 @@
 
   <div>
     <span class="block text-xs font-medium text-gray-500 uppercase tracking-wide my-1">Author:</span>
-    <span class="block text-base text-gray-900"><%= book.author.full_name %></span>
+    <% if book.author %>
+      <span class="block text-base text-gray-900"><%= book.author.full_name %></span>
+    <% else %>
+      <span class="block text-base text-gray-900">Unknown</span>
+    <% end %>
   </div>
 </div>
