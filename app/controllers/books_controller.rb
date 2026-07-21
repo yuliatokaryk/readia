@@ -38,6 +38,7 @@ class BooksController < ApplicationController
 
   # PATCH/PUT /books/1 or /books/1.json
   def update
+    authorize @book
     respond_to do |format|
       if @book.update(book_params)
         format.html { redirect_to @book, notice: "Book was successfully updated.", status: :see_other }
@@ -51,6 +52,7 @@ class BooksController < ApplicationController
 
   # DELETE /books/1 or /books/1.json
   def destroy
+    authorize @book
     @book.destroy!
 
     respond_to do |format|

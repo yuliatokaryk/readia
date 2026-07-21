@@ -38,6 +38,7 @@ class AuthorsController < ApplicationController
 
   # PATCH/PUT /authors/1 or /authors/1.json
   def update
+    authorize @author
     respond_to do |format|
       if @author.update(author_params)
         format.html { redirect_to @author, notice: "Author was successfully updated.", status: :see_other }
@@ -51,6 +52,7 @@ class AuthorsController < ApplicationController
 
   # DELETE /authors/1 or /authors/1.json
   def destroy
+    authorize @author
     @author.destroy!
 
     respond_to do |format|
