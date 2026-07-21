@@ -3,7 +3,21 @@ describe "Books", type: :request do
   let(:author) { create(:author, user: user) }
   let(:book) { create(:book, author: author, user: user) }
 
-  describe "GET /books" do
+  let(:valid_params) do
+    {
+      title: "Pride and Prejudice",
+      published_at: Date.current,
+      author_id: author.id
+    }
+  end
+
+  let(:new_params) {
+    {
+      title: "Updated title"
+    }
+  }
+
+  describe "GET /index" do
     before { book }
 
     it "returns a successful response including books list" do
@@ -13,7 +27,7 @@ describe "Books", type: :request do
     end
   end
 
-  describe "GET /book" do
+  describe "GET /show" do
     it "renders a successful response including a book" do
       get book_path(book)
       expect(response).to have_http_status(:success)
@@ -23,10 +37,9 @@ describe "Books", type: :request do
 
   describe "GET /new" do
     context "when user is signed in" do
-      before do
-        sign_in user
-      end
-      it "renders a successful response when user is signed in" do
+      before { sign_in user }
+
+      it "renders a successful response" do
         get new_book_path
         expect(response).to be_successful
       end
@@ -42,21 +55,73 @@ describe "Books", type: :request do
   end
 
   describe "GET /edit" do
-      it "renders a successful response" do
-        get edit_book_url(book)
-        expect(response).to be_successful
+    before { sign_in user }
+    it "renders a successful response" do
+      get edit_book_url(book)
+      expect(response).to be_successful
     end
   end
 
   describe "POST /create" do
-    
+    context "when user signed in" do
+      before { sign_in user }
+
+      it "creates a new book" do
+        expect {
+          post books_url, params: { book: valid_params }
+        }.to change(Book, :count).by(1)
+      end
+    end
+
+    context "when user is not signed in" do
+      it "does not create a new book" do
+        expect {
+          post books_url, params: { book: valid_params }
+        }.not_to change(Book, :count)
+      end
+    end
   end
 
   describe "PATCH /update" do
-    
+    context "when user is signed in" do
+      before { sign_in user }
+
+      it "updates the requested book" do
+        patch book_url(book), params: { book: new_params }
+        book.reload
+        expect(book.title).to eq("Updated title")
+      end
+    end
+
+    context "when user is not signed in" do
+      it "does not update the requested book" do
+        patch book_url(book), params: { book: new_params }
+        book.reload
+        expect(book.title).not_to eq("Updated title")
+      end
+    end
   end
 
   describe "DELETE /destroy" do
-    
+    context "when user is signed in" do
+      before { book }
+      before { sign_in user }
+
+      it "destroys the requested book" do
+        expect {
+          delete book_url(book)
+        }.to change(Book, :count).by(-1)
+      end
+    end
+
+    context "when user is not signed in" do
+      before { book }
+
+      it "does not destroy the requested book" do
+        expect {
+          delete book_url(book)
+        }.not_to change(Book, :count)
+      end
+    end
   end
 end
