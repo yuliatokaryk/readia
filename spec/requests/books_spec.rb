@@ -1,5 +1,6 @@
 describe "Books", type: :request do
   let(:user) { create(:user) }
+  let(:another_user) { create(:user) }
   let(:author) { create(:author, user: user) }
   let(:book) { create(:book, author: author, user: user) }
 
@@ -83,13 +84,25 @@ describe "Books", type: :request do
   end
 
   describe "PATCH /update" do
-    context "when user is signed in" do
+    context "when user is signed in and authorized" do
       before { sign_in user }
 
       it "updates the requested book" do
         patch book_url(book), params: { book: new_params }
         book.reload
         expect(book.title).to eq("Updated title")
+      end
+    end
+
+    context "when the user is signed in and not authorized" do
+      before { sign_in another_user }
+
+      it "redirects to the root path with an alert" do
+        patch book_url(book), params: { book: new_params }
+        expect(response).to redirect_to(root_path)
+        follow_redirect!
+
+        expect(flash[:alert]).to eq("You are not authorized to perform this action.")
       end
     end
 
@@ -103,7 +116,7 @@ describe "Books", type: :request do
   end
 
   describe "DELETE /destroy" do
-    context "when user is signed in" do
+    context "when user is signed in and authorized" do
       before { book }
       before { sign_in user }
 
@@ -111,6 +124,19 @@ describe "Books", type: :request do
         expect {
           delete book_url(book)
         }.to change(Book, :count).by(-1)
+      end
+    end
+
+    context "when the user is signed in and not authorized" do
+      before { book }
+      before { sign_in another_user }
+
+      it "redirects to the root path with an alert" do
+        delete book_url(book)
+        expect(response).to redirect_to(root_path)
+        follow_redirect!
+
+        expect(flash[:alert]).to eq("You are not authorized to perform this action.")
       end
     end
 

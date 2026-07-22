@@ -1,5 +1,6 @@
 describe "Author", type: :request do
   let(:user) { create(:user) }
+  let(:another_user) { create(:user) }
   let(:author) { create(:author, user: user) }
 
   let(:valid_params) do
@@ -81,13 +82,25 @@ describe "Author", type: :request do
   end
 
   describe "PATCH /update" do
-    context "when user is signed in" do
+    context "when user is signed in and authorized" do
       before { sign_in user }
 
       it "updates the requested author" do
         patch author_url(author), params: { author: new_params }
         author.reload
         expect(author.first_name).to eq("Updated")
+      end
+    end
+
+    context "when the user is signed in and not authorized" do
+      before { sign_in another_user }
+
+      it "redirects to the root path with an alert" do
+        patch author_url(author), params: { author: new_params }
+        expect(response).to redirect_to(root_path)
+        follow_redirect!
+
+        expect(flash[:alert]).to eq("You are not authorized to perform this action.")
       end
     end
 
@@ -101,7 +114,7 @@ describe "Author", type: :request do
   end
 
   describe "DELETE /destroy" do
-    context "when user is signed in" do
+    context "when user is signed in and authorized" do
       before { author }
       before { sign_in user }
 
@@ -109,6 +122,19 @@ describe "Author", type: :request do
         expect {
           delete author_url(author)
         }.to change(Author, :count).by(-1)
+      end
+    end
+
+    context "when the user is signed in and not authorized" do
+      before { author }
+      before { sign_in another_user }
+
+      it "redirects to the root path with an alert" do
+        delete author_url(author)
+        expect(response).to redirect_to(root_path)
+        follow_redirect!
+
+        expect(flash[:alert]).to eq("You are not authorized to perform this action.")
       end
     end
 
