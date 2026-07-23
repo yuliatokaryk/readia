@@ -61,3 +61,5 @@ end
 
 gem "devise", "~> 5.0"
 gem "pundit", "~> 2.5"
+
+gem "simplecov", "~> 1.0", group: :test
