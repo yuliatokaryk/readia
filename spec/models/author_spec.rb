@@ -9,7 +9,8 @@ describe Author, type: :model do
 
   describe "#full_name" do
     it "returns the author's full name" do
-      author = Author.new(
+      author = create(
+        :author,
         first_name: "Joanne",
         last_name: "Rowling"
       )
