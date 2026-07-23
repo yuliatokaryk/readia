@@ -7,30 +7,42 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
 require "ffaker"
+require "factory_bot_rails"
 
 USERS_COUNT = 5
+PASSWORD = "Password123!"
+MAX_AUTHOR_COUNT = 50
+MAX_BOOK_COUNT = 50
 
-users = (1..USERS_COUNT).each.map do |i|
+(1..USERS_COUNT).each.map do |i|
   email = "user_#{i}@gmail.com"
-  User.create!(
-    email: email,
-    password: "Password123!"
+  user = User.find_or_initialize_by(
+    email: email
   )
+  next if user.persisted?
+
+  user.password = PASSWORD
+  user.save!
 end
 
-authors = 10.times.map do
-  Author.create!(
-    user: users.sample,
-    first_name: FFaker::Name.first_name,
-    last_name: FFaker::Name.last_name,
-  )
+if Author.count < MAX_AUTHOR_COUNT
+  10.times.map do
+    FactoryBot.create(
+      :author,
+      :with_last_name,
+      user: User.all.sample
+    )
+  end
 end
 
-10.times do
-  Book.create!(
-    user: users.sample,
-    title: FFaker::Book.title,
-    author: authors.sample
-  )
+if Book.count < MAX_BOOK_COUNT
+  10.times do
+    FactoryBot.create(
+      :book,
+      user: User.all.sample,
+      author: Author.all.sample
+    )
+  end
 end
