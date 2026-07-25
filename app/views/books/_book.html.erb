@@ -1,4 +1,9 @@
 <div id="<%= dom_id book %>">
+  <% if book.cover.attached? %>
+    <%= image_tag book.cover %>
+  <% else %>
+    <%= image_tag "book-cover-default.jpg" %>
+  <% end %>
   <div>
     <span class="block text-xs font-medium text-gray-500 uppercase tracking-wide my-1">Title:</span>
     <span class="block text-base text-gray-900"><%= book.title %></span>
