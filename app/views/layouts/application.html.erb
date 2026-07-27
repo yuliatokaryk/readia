@@ -39,6 +39,9 @@
             </li>
             <% if user_signed_in? %>
               <li>
+                <%= link_to "Lists", lists_path %>
+              </li>
+              <li>
                 <p class="text-blue-800">Hello, <%= current_user.email %>
               </li>
               <li>
@@ -55,12 +58,6 @@
     </nav>
 
     <div class="max-w-sm mx-auto">
-      <% flash.each do |type, message| %>
-        <div class="p-4 mb-4 text-sm rounded-lg <%= type == 'alert' ? 'text-red-800 bg-red-50' : 'text-green-800 bg-green-50' %>">
-          <%= message %>
-        </div>
-      <% end %>
-
       <%= yield %>
     </div>
   </body>
