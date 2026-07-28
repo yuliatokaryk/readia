@@ -6,7 +6,7 @@ class ListPolicy < ApplicationPolicy
     end
 
     def resolve
-    scope.where(user: user)
+      scope.where(user: user)
     end
 
     private
@@ -15,18 +15,24 @@ class ListPolicy < ApplicationPolicy
   end
 
   def show?
-    record.user == user
+    record_owner?
   end
 
   def edit?
-    record.user == user
+    record_owner?
   end
 
   def update?
-    record.user == user
+    record_owner?
   end
 
   def destroy?
+    record_owner?
+  end
+
+  private
+
+  def record_owner?
     record.user == user
   end
 end

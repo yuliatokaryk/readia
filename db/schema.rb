@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_27_212456) do
+ActiveRecord::Schema[8.1].define(version: 2026_07_27_190049) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -54,13 +54,11 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_27_212456) do
   create_table "books", force: :cascade do |t|
     t.bigint "author_id"
     t.datetime "created_at", null: false
-    t.bigint "list_id"
     t.date "published_at"
     t.string "title"
     t.datetime "updated_at", null: false
     t.bigint "user_id"
     t.index ["author_id"], name: "index_books_on_author_id"
-    t.index ["list_id"], name: "index_books_on_list_id"
     t.index ["user_id"], name: "index_books_on_user_id"
   end
 
@@ -88,7 +86,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_27_212456) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "authors", "users"
   add_foreign_key "books", "authors"
-  add_foreign_key "books", "lists"
   add_foreign_key "books", "users"
   add_foreign_key "lists", "users"
 end
