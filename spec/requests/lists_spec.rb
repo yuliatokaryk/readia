@@ -5,8 +5,7 @@ describe "Lists", type: :request do
 
   let(:valid_params) do
     {
-      name: "Favorite",
-      description: "My favorite books"
+      name: "Favorite"
     }
   end
 
