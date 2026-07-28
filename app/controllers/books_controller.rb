@@ -1,10 +1,10 @@
 class BooksController < ApplicationController
-  before_action :authenticate_user!, only: %i[ new create edit update destroy ]
-  before_action :set_book, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!, only: %i[ new create edit update destroy add_to_list]
+  before_action :set_book, only: %i[ show edit update destroy add_to_list]
 
   # GET /books or /books.json
   def index
-    @books = Book.all
+    @books = Book.all.order(title: :asc)
   end
 
   # GET /books/1 or /books/1.json
@@ -61,6 +61,18 @@ class BooksController < ApplicationController
     end
   end
 
+  def add_to_list
+    list = current_user.lists.find(params[:list_id])
+
+    if @book.list == list
+      redirect_back fallback_location: books_path, notice: "Book is already in this list."
+      return
+    end
+
+    @book.update!(list: list)
+    redirect_back fallback_location: books_path, notice: "Book added to list."
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book
@@ -69,6 +81,6 @@ class BooksController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def book_params
-      params.expect(book: [ :title, :published_at, :author_id, :cover ])
+      params.expect(book: [ :title, :published_at, :author_id, :cover, :list_id ])
     end
 end
