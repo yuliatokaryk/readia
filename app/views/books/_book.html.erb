@@ -25,16 +25,17 @@
   </div>
 
   <% if user_signed_in? && current_user.lists.any? %>
-    <% if  book.list&.user == current_user %>
+    <% user_lists_for_book = book.lists.where(user: current_user) %>
+  
+    <% if user_lists_for_book.any? %>
       <span class="inline-flex items-center rounded-full bg-purple-100 px-2 py-0.5 text-xs font-medium text-blue-700" >
-        Added to your <%= book.list.name %> list
+        Added to list: <%= user_lists_for_book.map(&:name).join(", ") %>
       </span>
     <% end %>
 
     <%= form_with url: add_to_list_book_path(book), method: :post, class: "flex items-center gap-2 my-3" do |form| %>
-      <%= form.collection_select :list_id, current_user.lists, :id, :name, {},
-          class: "flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
-
+      <%= form.collection_select :list_id, current_user.lists, :id, :name, {}, class: "flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
+        
       <%= form.submit "Add to list", class: "rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer" %>
     <% end %>
   <% end %>

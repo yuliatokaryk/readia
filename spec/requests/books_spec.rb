@@ -163,7 +163,7 @@ describe "Books", type: :request do
       it "adds a book to user's list" do
         post add_to_list_book_path(book), params: { list_id: list.id }
 
-        expect(book.reload.list).to eq(list)
+        expect(book.reload.lists).to include(list)
       end
     end
 
@@ -174,7 +174,7 @@ describe "Books", type: :request do
         post add_to_list_book_path(book), params: { list_id: list.id }
 
         expect(response).to have_http_status(:not_found)
-        expect(book.reload.list).to be_nil
+        expect(book.reload.lists).to be_empty
       end
     end
 

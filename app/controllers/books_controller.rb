@@ -64,12 +64,12 @@ class BooksController < ApplicationController
   def add_to_list
     list = current_user.lists.find(params[:list_id])
 
-    if @book.list == list
+    if @book.lists.exists?(list.id)
       redirect_back fallback_location: books_path, notice: "Book is already in this list."
       return
     end
 
-    @book.update!(list: list)
+    @book.lists << list
     redirect_back fallback_location: books_path, notice: "Book added to list."
   end
 
