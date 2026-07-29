@@ -1,0 +1,9 @@
+<% content_for :title, "New list" %>
+
+<h1 class="text-gray-900 sm:text-1xl md:text-3xl mb-2">New list</h1>
+
+<%= render "form", list: @list %>
+
+<br>
+
+<%= link_to "Back to lists", lists_path, class: "bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" %>

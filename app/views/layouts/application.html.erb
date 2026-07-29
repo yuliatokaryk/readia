@@ -39,6 +39,9 @@
             </li>
             <% if user_signed_in? %>
               <li>
+                <%= link_to "Lists", lists_path %>
+              </li>
+              <li>
                 <p class="text-blue-800">Hello, <%= current_user.email %>
               </li>
               <li>
@@ -60,7 +63,6 @@
           <%= message %>
         </div>
       <% end %>
-
       <%= yield %>
     </div>
   </body>
