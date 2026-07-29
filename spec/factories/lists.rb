@@ -9,5 +9,9 @@ FactoryBot.define do
         create_list(:book, 3, list: list)
       end
     end
+
+    trait :default do
+      default { true }
+    end
   end
 end

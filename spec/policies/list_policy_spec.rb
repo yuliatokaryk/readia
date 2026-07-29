@@ -3,6 +3,7 @@ describe "ListPolicy", type: :policy do
   let(:user_1) { create(:user) }
 
   let(:list) { create(:list, user: user) }
+  let(:default_list) { create(:list, :default, user: user) }
 
   describe "#show?" do
     context "when user owns the list" do
@@ -37,10 +38,17 @@ describe "ListPolicy", type: :policy do
   end
 
   describe "#update?" do
-    context "when user owns the list" do
+    context "when user owns the list and list is non-default" do
       let(:policy) { ListPolicy.new(user, list) }
       it "allows updating" do
         expect(policy.update?).to be(true)
+      end
+    end
+
+    context "when user owns the list and list is default" do
+      let(:policy) { ListPolicy.new(user, default_list) }
+      it "does not allow updating" do
+        expect(policy.update?).to be(false)
       end
     end
 
@@ -53,10 +61,17 @@ describe "ListPolicy", type: :policy do
   end
 
   describe "#destroy?" do
-    context "when user owns the list" do
+    context "when user owns the list and list is non-default" do
       let(:policy) { ListPolicy.new(user, list) }
       it "allows destroying" do
         expect(policy.destroy?).to be(true)
+      end
+    end
+
+    context "when user owns the list and list is default" do
+      let(:policy) { ListPolicy.new(user, default_list) }
+      it "does not allow destroying" do
+        expect(policy.destroy?).to be(false)
       end
     end
 
