@@ -10,6 +10,7 @@
   <% @lists.each do |list| %>
   <div class="max-w-sm mx-auto bg-white rounded-lg shadow-sm border border-gray-200 p-4  my-3">
     <%= render list %>
+    <p class="text-sm text-gray-500"> <%= list.books.count %> book(s) added to this list </p>
     <div class="my-3">
       <%= link_to "Show this list", list, class: "bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 border border-blue-700 rounded" %>
     </div>

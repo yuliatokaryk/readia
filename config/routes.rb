@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
-  resources :books
+  resources :books do
+    post :add_to_list, on: :member
+  end
   resources :authors
   resources :lists
   devise_for :users

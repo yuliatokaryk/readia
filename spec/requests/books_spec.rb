@@ -3,6 +3,7 @@ describe "Books", type: :request do
   let(:another_user) { create(:user) }
   let(:author) { create(:author, user: user) }
   let(:book) { create(:book, author: author, user: user) }
+  let(:list) { create(:list, user: user) }
 
   let(:valid_params) do
     {
@@ -147,6 +148,42 @@ describe "Books", type: :request do
         expect {
           delete book_url(book)
         }.not_to change(Book, :count)
+      end
+    end
+  end
+
+  describe "POST /books/:id/add_to_list" do
+    before { book }
+    before { list }
+
+    context "when user is signed in and authorized" do
+      before { sign_in user }
+
+
+      it "adds a book to user's list" do
+        post add_to_list_book_path(book), params: { list_id: list.id }
+
+        expect(book.reload.lists).to include(list)
+      end
+    end
+
+    context "when the user is signed in and not authorized" do
+      before { sign_in another_user }
+
+      it "does not add a book to a user's list" do
+        post add_to_list_book_path(book), params: { list_id: list.id }
+
+        expect(response).to have_http_status(:not_found)
+        expect(book.reload.lists).to be_empty
+      end
+    end
+
+    context "when user is not signed in" do
+      it "redirects to sign in page" do
+        post add_to_list_book_path(book), params: { list_id: list.id }
+
+        expect(response).to have_http_status(:redirect)
+        expect(response).to redirect_to(new_user_session_path)
       end
     end
   end
