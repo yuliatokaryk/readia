@@ -29,6 +29,8 @@ class ListsController < ApplicationController
   end
 
   def update
+    authorize @list
+
     if @list.update(list_params)
       redirect_to @list, notice: "List was successfully updated.", status: :see_other
     else
@@ -37,6 +39,8 @@ class ListsController < ApplicationController
   end
 
   def destroy
+    authorize @list
+
     @list.destroy!
     redirect_to lists_path, notice: "List was successfully destroyed.", status: :see_other
   end

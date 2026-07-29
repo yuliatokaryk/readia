@@ -23,11 +23,11 @@ class ListPolicy < ApplicationPolicy
   end
 
   def update?
-    record_owner?
+    record_owner? && !record.default?
   end
 
   def destroy?
-    record_owner?
+    record_owner? && !record.default?
   end
 
   private
