@@ -58,6 +58,11 @@
     </nav>
 
     <div class="max-w-sm mx-auto">
+      <% flash.each do |type, message| %>
+        <div class="p-4 mb-4 text-sm rounded-lg <%= type == 'alert' ? 'text-red-800 bg-red-50' : 'text-green-800 bg-green-50' %>">
+          <%= message %>
+        </div>
+      <% end %>
       <%= yield %>
     </div>
   </body>
