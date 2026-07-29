@@ -11,10 +11,8 @@ class User < ApplicationRecord
   private
 
   def create_default_lists
-    lists.create!([
-      { name: "Want to Read", default: true },
-      { name: "Currently Reading", default: true },
-      { name: "Read", default: true }
-    ])
+    List::DEFAULT_LIST_NAMES.each do |name|
+      lists.create!(name: name, default: true)
+    end
   end
 end
