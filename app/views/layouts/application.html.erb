@@ -23,47 +23,48 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
-    <nav>
-      <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-        <a href="#" class="flex items-center space-x-3 rtl:space-x-reverse">
-          <span class="self-center text-xl text-heading font-semibold whitespace-nowrap">Readia</span>
-        </a>
-        <div class="hidden w-full md:block md:w-auto" id="navbar-dropdown">
-          <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-default rounded-base bg-neutral-secondary-soft md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-neutral-primary">
-            <li>
-              <%= link_to "Books", books_path %>
-            </li>
-            <li>
-              <%= link_to "Authors", authors_path %>              
-            </li>
-            <% if user_signed_in? %>
-              <li>
-                <%= link_to "Lists", lists_path %>
-              </li>
-              <li>
-                <p class="text-blue-800">Hello, <%= current_user.email %>
-              </li>
-              <li>
-                <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "text-white bg-red-600 hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-4 py-1.5 text-center" %>
-              </li>
-              <% else %>
-              <li>
-                <%= link_to "Log in", new_user_session_path, class: "text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-1.5 text-center" %>              
-              </li>
-            <% end %>
-          </ul>
-        </div>
-      </div>
-    </nav>
+  <body class="min-h-screen bg-neutral-50">
+    <div id="sidebar-drawer" class="sidebar-drawer" data-ds-panel="drawer">
+      <div class="sidebar-backdrop" data-ds-dismiss="drawer"></div>
+      <aside class="sidebar">
+        <div class="sidebar-section-title">Menu</div>
+        <%= link_to "Books", books_path, class: "sidebar-link sidebar-link-active" %>
+        <%= link_to "Authors", authors_path, class: "sidebar-link" %>
 
-    <div class="max-w-sm mx-auto">
-      <% flash.each do |type, message| %>
-        <div class="p-4 mb-4 text-sm rounded-lg <%= type == 'alert' ? 'text-red-800 bg-red-50' : 'text-green-800 bg-green-50' %>">
-          <%= message %>
-        </div>
-      <% end %>
-      <%= yield %>
+        <% if user_signed_in? %>
+          <%= link_to "Lists", lists_path, class: "sidebar-link" %>
+          <div class="sidebar-section-title">Account</div>
+          <a class="sidebar-link" href="#" data-ds-dismiss="drawer">Profile</a>
+          <div class="sidebar-footer">
+            <p class="mb-2 truncate text-xs text-neutral-400"><%= current_user.email %></p>
+            <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "sidebar-link" %>
+          </div>
+        <% end %>
+      </aside>
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary btn-md sidebar-toggle"
+      data-ds-toggle="drawer"
+      aria-controls="sidebar-drawer"
+      aria-expanded="false"
+      aria-label="Toggle sidebar"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
+      </svg>
+    </button>
+
+    <div class="pt-16 lg:ml-60">
+      <main class="mx-auto max-w-3xl space-y-10 p-8">
+        <% flash.each do |type, message| %>
+          <div class="p-4 mb-4 text-sm rounded-lg <%= type == 'alert' ? 'text-red-800 bg-red-50' : 'text-green-800 bg-green-50' %>">
+            <%= message %>
+          </div>
+        <% end %>
+        <%= yield %>
+      </main>
     </div>
   </body>
 </html>

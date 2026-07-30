@@ -1,42 +1,51 @@
 <div id="<%= dom_id book %>">
-  <% if book.cover.attached? %>
-    <%= image_tag book.cover %>
-  <% else %>
-    <%= image_tag "book-cover-default.jpg" %>
-  <% end %>
+  <div class="card card-horizontal mt-4">
+    <div class="card-book-cover">
+      <% if book.cover.attached? %>
+        <%= image_tag book.cover %>
+      <% else %>
+        <%= image_tag "book-cover-default.jpg" %>
+      <% end %>
+    </div>
+    <div>
+      <div class="flex flex-wrap gap-2 mb-3">
+        <% if book.user == current_user %>
+          <span class="badge badge-success">
+            Added by you
+          </span>
+        <% end %>
 
-  <div>
-    <span class="block text-xs font-medium text-gray-500 uppercase tracking-wide my-1">Title:</span>
-    <span class="block text-base text-gray-900"><%= book.title %></span>
+        <% user_lists_for_book = book.lists.where(user: current_user) %>
+
+        <% if user_lists_for_book.any? %>
+          <span class="badge badge-warning" >
+            Added to list: <%= user_lists_for_book.map(&:name).join(", ") %>
+          </span>
+        <% end %>
+      </div>
+
+      <h3 class="card-header">
+        <%= link_to book.title, book %>
+      </h3>
+      <p class="card-book-author">by
+        <% if book.author %>
+          <%= book.author.full_name %>
+        <% else %>
+          Unknown
+        <% end %>
+      </p>
+      <p class="card-body">A high fantasy epic of ancient pacts and a kingdom built on dragonfire.</p>
+      <% user_lists_for_book = book.lists.where(user: current_user) %>
+
+      <% if user_signed_in? %>
+        <%= form_with url: add_to_list_book_path(book), method: :post, class: "card-footer flex flex-col gap-3" do |form| %>
+          <div class="field">
+            <label class="label" for="book-shelf">Add to my list</label>
+            <%= form.collection_select :list_id, current_user.lists, :id, :name, {}, class: "select" %>
+          </div>
+          <%= form.submit "Add to list", class: "btn btn-primary btn-md" %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
-
-  <div>
-    <span class="block text-xs font-medium text-gray-500 uppercase tracking-wide my-1">Published at:</span>
-    <span class="block text-base text-gray-900"><%= book.published_at %></span>
-  </div>
-
-  <div>
-    <span class="block text-xs font-medium text-gray-500 uppercase tracking-wide my-1">Author:</span>
-    <% if book.author %>
-      <span class="block text-base text-gray-900"><%= book.author.full_name %></span>
-    <% else %>
-      <span class="block text-base text-gray-900">Unknown</span>
-    <% end %>
-  </div>
-
-  <% if user_signed_in? && current_user.lists.any? %>
-    <% user_lists_for_book = book.lists.where(user: current_user) %>
-  
-    <% if user_lists_for_book.any? %>
-      <span class="inline-flex items-center rounded-full bg-purple-100 px-2 py-0.5 text-xs font-medium text-blue-700" >
-        Added to list: <%= user_lists_for_book.map(&:name).join(", ") %>
-      </span>
-    <% end %>
-
-    <%= form_with url: add_to_list_book_path(book), method: :post, class: "flex items-center gap-2 my-3" do |form| %>
-      <%= form.collection_select :list_id, current_user.lists, :id, :name, {}, class: "flex-1 rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm text-gray-700 shadow-sm focus:border-blue-500 focus:ring-blue-500" %>
-        
-      <%= form.submit "Add to list", class: "rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 cursor-pointer" %>
-    <% end %>
-  <% end %>
 </div>
