@@ -1,10 +1,9 @@
-<section class="space-y-2">
-  <h2 class="font-serif text-lg font-semibold tracking-tight text-neutral-900">Books</h2>
-  <div class="space-y-4">
-    <div id="books">
-      <% @books.each do |book| %> 
-        <%= render book %>
-      <% end %>
-    </div>
-  </div>
-</section>
+<% content_for :title, "Books" %>
+
+<h2 class="font-serif text-lg font-semibold tracking-tight text-neutral-900">Books</h2>
+
+<div id="books">
+  <% @books.each do |book| %> 
+    <%= render book %>
+  <% end %>
+</div>
