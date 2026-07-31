@@ -1,39 +1,40 @@
-<%= form_with(model: book) do |form| %>
-  <% if book.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
+<section class="card max-w-md">
+  <%= form_with(model: book, html: { class: "flex flex-col gap-4" }) do |form| %>
+    <% if book.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(book.errors.count, "error") %> prohibited this book from being saved:</h2>
 
-      <ul>
-        <% book.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
+        <ul>
+          <% book.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+      
+    <div class="field">
+      <%= form.label :title, class: "label" %>
+      <%= form.text_field :title, class: "input" %>
     </div>
+
+    <div class="field">
+      <%= form.label :author_id, class: "label" %>
+      <%= form.collection_select :author_id, Author.all, :id, :full_name,
+        { prompt: "Select an author" },
+        { class: "input" } %>
+    </div>
+  
+    <div class="field">
+      <%= form.label :published_at, class: "label" %>
+      <%= form.date_field :published_at, class: "input" %>
+    </div>
+
+    <div class="field">
+      <%= form.label :cover, class: "label" %>
+      <%= form.file_field :cover, class: "input" %>
+      <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG or JPG</p>
+    </div>
+
+    <%= form.submit class: "btn btn-primary btn-md" %>
   <% end %>
-
-  <div class="mb-5">
-    <%= form.label :title, class: "block mb-2.5 text-sm font-medium text-heading" %>
-    <%= form.text_field :title, class: "bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow placeholder:text-body" %>
-  </div>
-
-  <div class="mb-5">
-    <%= form.label :published_at, class: "block mb-2.5 text-sm font-medium text-heading" %>
-    <%= form.date_field :published_at, class: "bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow placeholder:text-body" %>
-  </div>
-
-  <div class="mb-5">
-    <%= form.label :author_id, class: "block mb-2.5 text-sm font-medium text-heading" %>
-    <%= form.collection_select :author_id, Author.all, :id, :full_name,
-      { prompt: "Select an author" },
-      { class: "bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow" } 
-    %>
-  </div>
-
-  <div class="mb-5">
-    <%= form.label :cover, class: "block mb-2.5 text-sm font-medium text-heading" %>
-    <%= form.file_field :cover, class: "cursor-pointer bg-neutral-secondary-medium border border-default-medium text-heading text-lg rounded-base focus:ring-brand focus:border-brand block w-full shadow-xs placeholder:text-body" %>
-    <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG or JPG</p>
-  </div>
-
-  <%= form.submit class: "bg-green-500 hover:bg-green-700 text-white py-2 px-4 border border-green-700 rounded" %>
-<% end %>
+</section>
