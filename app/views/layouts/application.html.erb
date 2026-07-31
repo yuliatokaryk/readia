@@ -39,6 +39,10 @@
             <p class="mb-2 truncate text-xs text-neutral-400"><%= current_user.email %></p>
             <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "sidebar-link" %>
           </div>
+        <% else %>
+          <div class="sidebar-footer">
+            <%= link_to "Log in", new_user_session_path, class: "sidebar-link" %>
+          </div>
         <% end %>
       </aside>
     </div>
@@ -55,6 +59,42 @@
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
       </svg>
     </button>
+
+
+    <header class="header">
+      <span class="header-brand">Paganel UI</span>
+      <% if user_signed_in? %>
+        <nav class="header-nav hidden lg:flex gap-4">
+          <%= link_to "Add book", new_book_path %>
+          <%= link_to "Add author", new_author_path %>
+          <%= link_to "Add list", new_list_path %>
+        </nav>
+        <div class="header-actions">
+          <div class="dropdown">
+            <button
+              class="rounded-full focus:outline-none focus:ring-2 focus:ring-brand-500/40"
+              data-ds-toggle="dropdown"
+              aria-controls="user-menu"
+              aria-expanded="false"
+            >
+              <img class="avatar" src="/images/tabby-cat-square.jpg" alt="User avatar" />
+            </button>
+            <div id="user-menu" class="dropdown-menu right-0" data-ds-panel="dropdown" hidden>
+              <button class="dropdown-item" data-ds-dismiss="dropdown">Profile</button>
+              <button class="dropdown-item" data-ds-dismiss="dropdown">Settings</button>
+              <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
+            </div>
+          </div>
+        </div>
+      <% else %>
+        <div class="header-actions">
+          <div class="hidden lg:flex gap-2">
+            <%= link_to "Log in", new_user_session_path, class: "btn btn-secondary btn-sm" %>
+            <%= link_to "Get started", new_user_registration_path, class: "btn btn-primary btn-sm" %>
+          </div>
+        </div>
+      <% end %>
+    </header>
 
     <div class="pt-16 lg:ml-60">
       <main class="mx-auto max-w-3xl space-y-10 p-8">
