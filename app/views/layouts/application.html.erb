@@ -29,11 +29,7 @@
 
     <div class="pt-16 lg:ml-60">
       <main class="mx-auto max-w-3xl space-y-10 p-8">
-        <% flash.each do |type, message| %>
-          <div class="p-4 mb-4 text-sm rounded-lg <%= type == 'alert' ? 'text-red-800 bg-red-50' : 'text-green-800 bg-green-50' %>">
-            <%= message %>
-          </div>
-        <% end %>
+        <%= render "shared/flash" %>
         <%= yield %>
       </main>
     </div>
