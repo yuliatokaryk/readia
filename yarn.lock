@@ -615,10 +615,10 @@ node-addon-api@^7.0.0:
   resolved "https://registry.npmjs.org/node-addon-api/-/node-addon-api-7.1.1.tgz"
   integrity sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==
 
-paganel-ui@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/paganel-ui/-/paganel-ui-0.1.0.tgz#0bd9c4abe09aac5b4926c10144a60d0a9e685439"
-  integrity sha512-/URKM6hYLyGE0MrGwV0LahIDxrUEB7pyAbEm4TE/NdxTgvAM0FJL22c8iR5/MCR7sLyEa0nkU2EfONuvS2cLzA==
+paganel-ui@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/paganel-ui/-/paganel-ui-0.2.0.tgz#9445d6b321a3a8776411873211d9c63b113e9bdf"
+  integrity sha512-cJAzP7IhC0BMxmWKOArxBf2vsNJr35ZP0cR7NeaydK7T9QyY3//2OoIlxukF07iyBtRrj4zmuWmniFxl1BJOqA==
 
 picocolors@^1.1.1:
   version "1.1.1"
