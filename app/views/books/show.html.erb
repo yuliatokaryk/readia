@@ -1,5 +1,7 @@
 <%= render @book %>
 
+<%= render "reviews/form", book: @book, review: @review %>
+
 <div class=" flex flex-wrap gap-2">
 <% if policy(@book).update? %>
   <%= link_to "Edit this book", edit_book_path(@book), class: "btn btn-primary btn-md" %>

@@ -2,6 +2,7 @@ class User < ApplicationRecord
   has_many :authors, dependent: :destroy
   has_many :books, dependent: :destroy
   has_many :lists, dependent: :destroy
+  has_many :reviews, dependent: :destroy
 
   after_create :create_default_lists
 

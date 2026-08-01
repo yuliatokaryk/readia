@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   resources :books do
     post :add_to_list, on: :member
+    resources :reviews, only: [:create, :update]
   end
   resources :authors
   resources :lists
