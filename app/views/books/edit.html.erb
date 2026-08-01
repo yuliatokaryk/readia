@@ -1,12 +1,5 @@
 <% content_for :title, "Editing book" %>
 
-<h1 class="text-gray-900 sm:text-1xl md:text-3xl mb-2">Editing book</h1>
+<h2 class="font-serif text-lg font-semibold tracking-tight text-neutral-900">Editing Book</h2>
 
 <%= render "form", book: @book %>
-
-<br>
-
-<div>
-  <%= link_to "Show this book", @book, class: "bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 border border-blue-700 rounded" %>
-  <%= link_to "Back to books", books_path, class: "bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-1 px-2 border border-blue-500 hover:border-transparent rounded" %>
-</div>

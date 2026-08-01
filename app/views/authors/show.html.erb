@@ -1,15 +1,11 @@
-<div class="max-w-sm mx-auto bg-white rounded-lg shadow-sm border border-gray-200 p-4  my-3">
-  <%= render @author %>
+<%= render @author %>
 
-  <div class="my-5">
-    <% if policy(@author).update? %>
-      <%= link_to "Edit this author", edit_author_path(@author), class: "bg-green-500 hover:bg-green-700 text-white py-1 px-2 border border-green-700 rounded" %>
-    <% end %>
-
-    <%= link_to "Back to authors", authors_path, class: "bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-1 px-2 border border-blue-500 hover:border-transparent rounded" %>
-  </div>
+<div class=" flex flex-wrap gap-2">
+  <% if policy(@author).update? %>
+    <%= link_to "Edit this author", edit_author_path(@author), class: "btn btn-primary btn-md" %>
+  <% end %>
 
   <% if policy(@author).destroy? %>
-    <%= button_to "Destroy this author", @author, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white py-1 px-2 border border-red-700 rounded"%>
+    <%= button_to "Destroy this author", @author, method: :delete, class: "btn btn-danger btn-md"%>
   <% end %>
 </div>

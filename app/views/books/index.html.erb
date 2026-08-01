@@ -1,24 +1,14 @@
 <% content_for :title, "Books" %>
 
-<h1 class="text-gray-900 sm:text-1xl md:text-3xl mb-2">Books</h1>
-
-<% if user_signed_in? %>
-  <%= link_to "Add new book", new_book_path, class: "bg-green-500 hover:bg-green-700 text-white py-1 px-2 border border-green-700 rounded" %>
-<% end %>
-
-<div id="books">
-  <% @books.each do |book| %>
-  <div class="max-w-sm mx-auto bg-white rounded-lg shadow-sm border border-gray-200 p-4  my-3">
-    <% if book.user == current_user %>
-      <span class="inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-xs font-medium text-blue-700 mb-3">
-        Added by you
-      </span>
-    <% end %>
-
-    <%= render book %>
-    <div class="my-3">
-      <%= link_to "Show this book", book, class: "bg-blue-500 hover:bg-blue-700 text-white py-1 px-2 border border-blue-700 rounded" %>
-    </div>
-  </div>  
+<div>
+  <h2 class="font-serif text-lg font-semibold tracking-tight text-neutral-900 mb-4">Books</h2>
+  <% if user_signed_in? %>
+    <%= link_to "Add book", new_book_path, class: "btn btn-primary mb-2" %>
   <% end %>
+
+  <div id="books">
+    <% @books.each do |book| %>
+      <%= render book %>
+    <% end %>
+  </div>
 </div>

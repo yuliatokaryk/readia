@@ -1,9 +1,5 @@
 <% content_for :title, "New book" %>
 
-<h1 class="text-gray-900 sm:text-1xl md:text-3xl mb-2">New book</h1>
+<h2 class="font-serif text-lg font-semibold tracking-tight text-neutral-900">New Book</h2>
 
 <%= render "form", book: @book %>
-
-<br>
-
-<%= link_to "Back to books", books_path, class: "bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded" %>
