@@ -81,5 +81,9 @@ test:
 production:
   <<: *default
   database: readia_production
-  username: readia
-  password: <%= ENV["READIA_DATABASE_PASSWORD"] %>
+  username: deploy
+
+staging:
+  <<: *default
+  database: staging-readia_production
+  username: deploy
