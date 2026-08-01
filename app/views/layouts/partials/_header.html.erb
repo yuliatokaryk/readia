@@ -1,0 +1,28 @@
+<header class="header">
+  <span class="header-brand">Readia</span>
+  <% if user_signed_in? %>
+    <div class="header-actions">
+      <div class="dropdown">
+        <button
+          class="rounded-full focus:outline-none focus:ring-2 focus:ring-brand-500/40"
+          data-ds-toggle="dropdown"
+          aria-controls="user-menu"
+          aria-expanded="false"
+        >
+          <%= image_tag "author-portrait-default.jpg", class: "avatar" %>
+        </button>
+        <div id="user-menu" class="dropdown-menu right-0" data-ds-panel="dropdown" hidden>
+          <%= link_to "Profile", edit_user_registration_path, class: "dropdown-item", data_ds_dismiss: "dropdown" %>
+          <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="header-actions">
+      <div class="hidden lg:flex gap-2">
+        <%= link_to "Log in", new_user_session_path, class: "btn btn-secondary btn-sm" %>
+        <%= link_to "Get started", new_user_registration_path, class: "btn btn-primary btn-sm" %>
+      </div>
+    </div>
+  <% end %>
+</header>

@@ -24,71 +24,8 @@
   </head>
 
   <body class="min-h-screen bg-neutral-50">
-    <div id="sidebar-drawer" class="sidebar-drawer" data-ds-panel="drawer">
-      <div class="sidebar-backdrop" data-ds-dismiss="drawer"></div>
-      <aside class="sidebar">
-        <div class="sidebar-section-title">Menu</div>
-        <%= link_to "Books", books_path, class: "sidebar-link #{ sidebar_link_active_class(:books) }" %>
-        <%= link_to "Authors", authors_path, class: "sidebar-link #{ sidebar_link_active_class(:authors) }" %>
-
-        <% if user_signed_in? %>
-          <%= link_to "Lists", lists_path, class: "sidebar-link #{ sidebar_link_active_class(:lists) }" %>
-          <div class="sidebar-section-title">Account</div>
-          <%= link_to "Profile", edit_user_registration_path, class: "sidebar-link #{ sidebar_link_active_class(:registrations) }" %>
-          <div class="sidebar-footer">
-            <p class="mb-2 truncate text-xs text-neutral-400"><%= current_user.email %></p>
-            <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "sidebar-link" %>
-          </div>
-        <% else %>
-          <div class="sidebar-footer">
-            <%= link_to "Log in", new_user_session_path, class: "sidebar-link" %>
-          </div>
-        <% end %>
-      </aside>
-    </div>
-
-    <button
-      type="button"
-      class="btn btn-primary btn-md sidebar-toggle"
-      data-ds-toggle="drawer"
-      aria-controls="sidebar-drawer"
-      aria-expanded="false"
-      aria-label="Toggle sidebar"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
-      </svg>
-    </button>
-
-
-    <header class="header">
-      <span class="header-brand">Readia</span>
-      <% if user_signed_in? %>
-        <div class="header-actions">
-          <div class="dropdown">
-            <button
-              class="rounded-full focus:outline-none focus:ring-2 focus:ring-brand-500/40"
-              data-ds-toggle="dropdown"
-              aria-controls="user-menu"
-              aria-expanded="false"
-            >
-              <%= image_tag "author-portrait-default.jpg", class: "avatar" %>
-            </button>
-            <div id="user-menu" class="dropdown-menu right-0" data-ds-panel="dropdown" hidden>
-              <%= link_to "Profile", edit_user_registration_path, class: "dropdown-item", data_ds_dismiss: "dropdown" %>
-              <%= link_to "Sign out", destroy_user_session_path, data: { turbo_method: :delete }, class: "dropdown-item" %>
-            </div>
-          </div>
-        </div>
-      <% else %>
-        <div class="header-actions">
-          <div class="hidden lg:flex gap-2">
-            <%= link_to "Log in", new_user_session_path, class: "btn btn-secondary btn-sm" %>
-            <%= link_to "Get started", new_user_registration_path, class: "btn btn-primary btn-sm" %>
-          </div>
-        </div>
-      <% end %>
-    </header>
+    <%= render "layouts/partials/sidebar" %>
+    <%= render "layouts/partials/header" %>
 
     <div class="pt-16 lg:ml-60">
       <main class="mx-auto max-w-3xl space-y-10 p-8">
