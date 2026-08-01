@@ -1,0 +1,24 @@
+<%= form_with model: [book, review] do |form| %>
+  <% if review.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+      <ul>
+        <% review.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-5">
+    <%= form.label :body, class: "block mb-2.5 text-sm font-medium text-heading" %>
+    <%= form.text_field :body, class: "bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand block w-full px-3 py-2.5 shadow placeholder:text-body" %>
+  </div>
+
+  <div class="flex gap-2 mt-3">
+    <%= form.submit "Save as draft", name: "published", value: "false", class: "btn" %>
+
+    <%= form.submit "Publish", name: "published", value: "true", class: "btn btn-primary" %>
+  </div>
+<% end %>
