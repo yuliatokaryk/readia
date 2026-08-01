@@ -85,5 +85,5 @@ production:
 
 staging:
   <<: *default
-  database: staging-readia_production
+  database: readia_staging
   username: deploy
