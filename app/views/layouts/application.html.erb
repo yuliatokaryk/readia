@@ -62,13 +62,8 @@
 
 
     <header class="header">
-      <span class="header-brand">Paganel UI</span>
+      <span class="header-brand">Readia</span>
       <% if user_signed_in? %>
-        <nav class="header-nav hidden lg:flex gap-4">
-          <%= link_to "Add book", new_book_path %>
-          <%= link_to "Add author", new_author_path %>
-          <%= link_to "Add list", new_list_path %>
-        </nav>
         <div class="header-actions">
           <div class="dropdown">
             <button

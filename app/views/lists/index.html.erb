@@ -1,14 +1,19 @@
 <% content_for :title, "Lists" %>
 
-<h2 class="font-serif text-lg font-semibold tracking-tight text-neutral-900">Lists</h2>
-
-<div id="lists">
-  <% @lists.each do |list| %>
-    <div class="card mt-3">
-      <%= render list %>
-      <div class="card-footer flex flex-wrap gap-2">
-        <%= link_to "Show this list", list, class: "btn btn-primary btn-md" %>
-      </div>
-    </div>
+<div>
+  <h2 class="font-serif text-lg font-semibold tracking-tight text-neutral-900 mb-4">Lists</h2>
+  <% if user_signed_in? %>
+    <%= link_to "Add list", new_list_path, class: "btn btn-primary mb-2" %>
   <% end %>
+
+  <div id="lists">
+    <% @lists.each do |list| %>
+      <div class="card mt-3">
+        <%= render list %>
+        <div class="card-footer flex flex-wrap gap-2">
+          <%= link_to "Show this list", list, class: "btn btn-primary btn-md" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>

@@ -1,13 +1,18 @@
 <% content_for :title, "Authors" %>
 
-<h2 class="font-serif text-lg font-semibold tracking-tight text-neutral-900">Authors</h2>
+<div>
+  <h2 class="font-serif text-lg font-semibold tracking-tight text-neutral-900 mb-4">Authors</h2>
+  <% if user_signed_in? %>
+    <%= link_to "Add author", new_author_path, class: "btn btn-primary mb-4" %>
+  <% end %>
 
-<div id="authors">
-  <div class="space-y-4">
-    <div class="grid md:grid-cols-2 gap-4">
-      <% @authors.each do |author| %>
-        <%= render author %>
-      <% end %>
+  <div id="authors">
+    <div class="space-y-4">
+      <div class="grid md:grid-cols-2 gap-4">
+        <% @authors.each do |author| %>
+          <%= render author %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

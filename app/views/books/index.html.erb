@@ -1,9 +1,14 @@
 <% content_for :title, "Books" %>
 
-<h2 class="font-serif text-lg font-semibold tracking-tight text-neutral-900">Books</h2>
-
-<div id="books">
-  <% @books.each do |book| %>
-      <%= render book %>
+<div>
+  <h2 class="font-serif text-lg font-semibold tracking-tight text-neutral-900 mb-4">Books</h2>
+  <% if user_signed_in? %>
+    <%= link_to "Add book", new_book_path, class: "btn btn-primary mb-2" %>
   <% end %>
+
+  <div id="books">
+    <% @books.each do |book| %>
+      <%= render book %>
+    <% end %>
+  </div>
 </div>
