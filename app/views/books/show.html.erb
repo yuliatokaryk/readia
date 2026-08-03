@@ -80,7 +80,7 @@
                 </p>
                 <div class="flex flex-wrap items-baseline gap-2">
                   <% if policy(review).update? %>
-                    <%= link_to "Edit", edit_book_review_path(@book), class: "comment-meta" %>
+                    <%= link_to "Edit", book_path(@book, review_id: review.id), class: "comment-meta" %>
                   <% end %>
                   <%= button_to book_review_path(@book, review),
                       method: :delete,

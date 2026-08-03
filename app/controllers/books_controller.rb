@@ -12,7 +12,12 @@ class BooksController < ApplicationController
     @reviews = policy_scope(@book.reviews)
 
     if user_signed_in?
-      @review = @book.reviews.find_or_initialize_by(user: current_user)
+      if params[:review_id]
+        @review = @book.reviews.find(params[:review_id])
+        authorize @review, :update?
+      else
+        @review = @book.reviews.build
+      end
     end
   end
 

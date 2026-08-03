@@ -5,33 +5,32 @@ class ReviewsController < ApplicationController
 
   def create
     @review = @book.reviews.build(review_params)
-
-    authorize @review
-
     @review.user = current_user
     @review.published = params[:published] == "true"
+
+    authorize @review
 
     if @review.save
       redirect_to @book, notice: "Review saved."
     else
-      @reviews = policy_scope(@book.reviews)
       render "books/show", status: :unprocessable_content
     end
   end
 
   def edit
     authorize @review
-
-    @review.published = true if !@review.published?
-
-    if @review.update(review_params)
-      redirect_to @book
-    else
-      render :edit, status: :unprocessable_content
-    end
   end
 
   def update
+    authorize @review
+
+    @review.published = params[:published] == "true"
+
+    if @review.update(review_params)
+      redirect_to @book, notice: "Review updated."
+    else
+      render :edit, status: :unprocessable_content
+    end
   end
 
   def destroy
@@ -39,7 +38,7 @@ class ReviewsController < ApplicationController
 
     @review.destroy
 
-    redirect_to @book
+    redirect_to @book, notice: "Review deleted."
   end
 
   private
