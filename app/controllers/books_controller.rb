@@ -9,7 +9,11 @@ class BooksController < ApplicationController
 
   # GET /books/1 or /books/1.json
   def show
-    @review = @book.reviews.build
+    @reviews = policy_scope(@book.reviews)
+
+    if user_signed_in?
+      @review = @book.reviews.find_or_initialize_by(user: current_user)
+    end
   end
 
   # GET /books/new
