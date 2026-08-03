@@ -9,6 +9,16 @@ class BooksController < ApplicationController
 
   # GET /books/1 or /books/1.json
   def show
+    @reviews = policy_scope(@book.reviews)
+
+    if user_signed_in?
+      if params[:review_id]
+        @review = @book.reviews.find(params[:review_id])
+        authorize @review, :update?
+      else
+        @review = @book.reviews.build
+      end
+    end
   end
 
   # GET /books/new

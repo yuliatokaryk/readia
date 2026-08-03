@@ -1,0 +1,23 @@
+<%= form_with(model: [book, review], html: { class: "flex flex-col gap-3 mt-4" }) do |form| %>
+  <% if review.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(review.errors.count, "error") %> prohibited this review from being saved:</h2>
+
+      <ul>
+        <% review.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+    
+  <div class="field">
+    <%= form.label "Add a review", class: "label" %>
+    <%= form.text_area :body, class: "textarea" %>
+  </div>
+
+  <div class=" flex flex-wrap gap-2">
+    <%= button_tag "Publish", type: "submit", name: "published", value: "true", class: "btn btn-primary btn-sm self-start" %>
+    <%= button_tag "Save as draft", type: "submit", name: "published", value: "false", class: "btn btn-secondary btn-sm self-start" %>
+  </div>
+<% end %>
